@@ -1,0 +1,18 @@
+{
+  "name": "icfsandiego/worship Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm install || true",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig",
+        "ms-vscode-remote.remote-containers"
+      ]
+    }
+  },
+  "remoteUser": "vscode"
+}

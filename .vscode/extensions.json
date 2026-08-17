@@ -1,9 +1,0 @@
-{
-  "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "eamodio.gitlens",
-    "EditorConfig.EditorConfig",
-    "ms-vscode-remote.remote-containers"
-  ]
-}

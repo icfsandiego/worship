@@ -48,8 +48,7 @@
     .brand-place { display: block; font: 500 13px/1.3 var(--sans); letter-spacing: .07em; margin-top: 4px; color: var(--muted); }
     .intro { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 0 13px; text-align: left; }
     h1 { margin: 0; font: 600 clamp(26px, 3.5vw, 31px)/1.15 var(--serif); letter-spacing: -.025em; }
-    .discovery { display: block; }
-    .field-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .discovery { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-bottom: 12px; }
     .search-field { min-height: 46px; display: flex; align-items: center; gap: 11px; border: 1px solid #b9c0be; border-radius: 9px; background: var(--paper); padding: 0 13px; }
     .search-field > svg { color: var(--gold); }
     .search-field input { width: 100%; min-width: 0; border: 0; background: transparent; padding: 12px 0; outline: none; color: var(--ink); font-size: 16px; }
@@ -57,25 +56,10 @@
     .search-field:focus-within { border-color: var(--gold); outline: 2px solid #9b7736; outline-offset: 2px; }
     input[type=search]::-webkit-search-cancel-button { display: none; }
     .clear-search { border: 0; background: transparent; padding: 10px 0 10px 6px; min-height: 44px; font-size: 14px; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+    .search-submit { min-height: 46px; padding: 10px 14px; border: 1px solid var(--navy); border-radius: 9px; background: var(--navy); color: white; font-size: 14px; font-weight: 600; }
+    .search-submit:hover { background: var(--navy-soft); }
+    #song-collection { scroll-margin-top: 12px; }
     select { min-height: 52px; width: 100%; background: var(--paper); border: 1px solid #b9c0be; border-radius: 9px; padding: 11px 12px; font-size: 16px; }
-    .search-help { color: var(--muted); font-size: 12px; margin: 13px 0; line-height: 1.5; }
-    .browse-songs { margin: 0 0 15px; padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: #fcf8ef; }
-    .filter-fields { margin-bottom: 17px; }
-    .tools-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 8px 10px; min-height: 42px; border: 1px solid var(--line); border-radius: 8px; background: #fcf8ef; color: var(--navy); font-size: 13px; white-space: nowrap; }
-    .tools-toggle svg { width: 15px; height: 15px; }
-    .tools-toggle[aria-expanded=true] svg { transform: rotate(180deg); }
-    .tools-done { display: block; border: 0; border-radius: 7px; background: var(--navy); color: white; padding: 11px 18px; min-height: 44px; font-size: 14px; }
-    .browse-form { padding: 0; }
-    .browse-controls { display: flex; gap: 10px; align-items: stretch; }
-    .browse-controls select { flex: 1; min-width: 0; }
-    .browse-open { flex-shrink: 0; padding: 11px 17px; font-size: 15px; }
-    .browse-open:disabled { border-color: #d1d6cc; }
-    .browse-help { margin: 9px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
-    .results-toolbar { margin: 9px 0 13px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .views { display: inline-flex; background: #f3efe5; border-radius: 8px; padding: 3px; gap: 2px; }
-    .view-button { min-height: 36px; padding: 8px 13px; border: 1px solid transparent; background: transparent; color: var(--muted); border-radius: 6px; font-size: 13px; }
-    .view-button[aria-pressed=true] { background: #ead8a5; color: var(--navy); }
-    .view-count { font-size: 12px; margin-left: 6px; }
     .language-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 14px; padding: 4px; border-radius: 10px; background: #f3efe5; }
     .language-tab { flex: 1 1 auto; min-height: 44px; padding: 9px 12px; border: 1px solid transparent; border-radius: 7px; background: transparent; color: var(--muted); font-size: 13px; font-weight: 500; line-height: 1.3; }
     .language-tab:hover { background: #eae2d0; color: var(--navy); }
@@ -95,8 +79,6 @@
     .song-copy { flex: 1; min-width: 0; }
     .song-name { display: block; font-size: 18px; font-weight: 700; line-height: 1.45; overflow-wrap: anywhere; }
     .song-meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 5px; color: #d5dfed; font-size: 13px; line-height: 1.4; }
-    .song-saved { color: var(--gold-light); }
-    .song-saved::before { content: '·'; margin-right: 9px; }
     .song-action { display: flex; align-items: center; color: var(--gold-light); flex-shrink: 0; }
     .song-chevron { width: 24px; height: 24px; }
     .empty { border: 1px dashed #c8cdc1; background: var(--paper); border-radius: 10px; padding: 36px 20px; text-align: center; }
@@ -120,9 +102,7 @@
     .reader-kicker { text-align: center; margin: 0 0 12px; color: var(--gold); font-size: 13px; line-height: 1.6; }
     .reader-title { text-align: center; font: 400 clamp(29px, 4.6vw, 38px)/1.25 var(--serif); letter-spacing: -.025em; margin: 0; outline: none; }
     .reader-actions { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px 22px; margin: 23px 0 24px; border-bottom: 1px solid var(--line); padding-bottom: 20px; }
-    .save-song, .tool-button { border: 1px solid #bec5b9; background: var(--paper); min-height: 44px; border-radius: 7px; padding: 10px 13px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; }
-    .save-song[aria-pressed=true] { color: var(--gold); border-color: #b9a273; background: #f5eedf; }
-    .save-song[aria-pressed=true] svg { fill: #ead4a2; }
+    .tool-button { border: 1px solid #bec5b9; background: var(--paper); min-height: 44px; border-radius: 7px; padding: 10px 13px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; }
     .reader-settings { flex: 1; min-width: 155px; }
     .reader-settings summary { padding: 11px 0; }
     .reader-tools { display: grid; gap: 13px; background: #f3f2eb; padding: 15px; border-radius: 8px; margin-top: 7px; }
@@ -149,17 +129,12 @@
       .brand img { width: 44px; height: 44px; }
       .brand-name { font-size: 17px; }
       .brand-place { font-size: 12px; margin-top: 3px; }
+      .search-field { gap: 6px; padding: 0 10px; }
+      .search-field > svg { display: none; }
+      .search-submit { padding: 10px 12px; }
       .intro { padding: 0 0 10px; gap: 8px; }
-      .results-toolbar { flex-wrap: wrap; margin: 8px 0 10px; gap: 7px; }
-      .tools-toggle { font-size: 12px; padding: 8px; min-height: 40px; }
-      .browse-songs { padding: 12px; }
-      .filter-fields select { font-size: 14px; padding: 10px 7px; min-height: 44px; }
       .language-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 11px; }
       .language-tab { padding: 8px 4px; }
-      .browse-controls { flex-direction: column; }
-      .browse-open { width: 100%; }
-      .views { flex-shrink: 0; }
-      .view-button { padding: 8px; min-height: 34px; font-size: 12px; }
       .results-info { font-size: 12px; }
       .reset-link { font-size: 12px; }
       .song-open { padding: 12px; gap: 11px; min-height: 76px; }
@@ -205,38 +180,17 @@
     <h1 class="sr-only" id="page-title">Worship Songs</h1>
     <p class="sr-only" id="results-info" role="status" aria-live="polite"></p>
 
-    <section class="discovery" aria-label="Find a song">
+    <form class="discovery" id="song-search-form" role="search" aria-label="Find a song">
       <label class="sr-only" for="song-search">Search by song number, name, or lyrics</label>
-      <div class="search-field" role="search">
+      <div class="search-field">
         <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
-        <input id="song-search" type="search" placeholder="Search song number or name…" aria-describedby="search-help" autocomplete="off" spellcheck="false" />
+        <input id="song-search" type="search" placeholder="Song number or name…" enterkeyhint="search" aria-describedby="search-help" autocomplete="off" autocapitalize="off" spellcheck="false" />
         <button id="clear-search" class="clear-search" type="button" hidden>Clear</button>
       </div>
-    </section>
+      <button id="submit-search" class="search-submit" type="submit" aria-controls="song-collection">Search</button>
+    </form>
 
-    <div class="results-toolbar">
-      <div class="views" role="group" aria-label="Choose songs">
-        <button class="view-button" id="all-view" type="button" aria-pressed="true">All songs</button>
-        <button class="view-button" id="favorites-view" type="button" aria-pressed="false">Favorites<span class="view-count" id="favorites-count" hidden></span></button>
-      </div>
-      <button class="tools-toggle" id="toggle-tools" type="button" aria-expanded="false" aria-controls="browse-songs">Browse &amp; sort <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
-    </div>
-
-    <section class="browse-songs" id="browse-songs" aria-label="Browse and sort songs" hidden>
-      <div class="filter-fields">
-        <div><label class="field-label" for="song-sort">Sort songs</label><select id="song-sort"><option value="number">By song number</option><option value="title">By name: A–Z</option><option value="newest">Recently added first</option></select></div>
-      </div>
-      <form id="browse-form" class="browse-form">
-        <label class="field-label" for="song-picker">Browse all songs</label>
-        <div class="browse-controls">
-          <select id="song-picker" aria-describedby="browse-help" required><option value="">Select a song…</option></select>
-          <button class="primary-button browse-open" id="open-selected-song" type="submit" disabled>Open song</button>
-        </div>
-        <p class="browse-help" id="browse-help">Choose any song from the A–Z list, or tap a numbered song below.</p>
-      </form>
-      <p class="search-help" id="search-help">Search using 7, #7, a song name, or a word from the lyrics.</p>
-      <button class="tools-done" id="close-tools" type="button">Done — show songs</button>
-    </section>
+    <p class="sr-only" id="search-help">Search using 7, #7, a song name, or a word from the lyrics. Tap Search to close the keyboard and see the results.</p>
 
     <div class="language-tabs" id="language-tabs" role="tablist" aria-label="Song language"></div>
 
@@ -261,7 +215,6 @@
       <p class="reader-kicker" id="reader-kicker"></p>
       <h2 class="reader-title" id="reader-title" tabindex="-1"></h2>
       <div class="reader-actions">
-        <button class="save-song" id="reader-favorite" type="button" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4L2.8 9.7l6.4-.9Z"/></svg><span id="favorite-label">Save song</span></button>
         <details class="reader-settings" id="reader-settings">
           <summary>Text &amp; sharing</summary>
           <div class="reader-tools">
@@ -680,7 +633,6 @@ Glory, glory to His name!
     const $ = id => document.getElementById(id);
     const normalize = value => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().replace(/[’']/g, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
     const icons = {
-      star: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4L2.8 9.7l6.4-.9Z"/></svg>',
       next: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></svg>',
       prev: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></svg>'
     };
@@ -688,7 +640,7 @@ Glory, glory to His name!
       const title = section.querySelector('.song-title').textContent.trim();
       const lyrics = section.querySelector('.lyrics');
       const languages = (section.dataset.languages || 'Other').split(',').map(x => x.trim()).filter(Boolean);
-      return { id: section.id, number: Number(section.dataset.number) || index + 1, title, languages, html: lyrics.innerHTML.trim(), index,
+      return { id: section.id, number: Number(section.dataset.number) || index + 1, title, languages, html: lyrics.innerHTML.trim(),
         search: normalize(title + ' ' + (section.dataset.keywords || '') + ' ' + lyrics.textContent) };
     });
     const songById = new Map(songs.map(song => [song.id, song]));
@@ -697,12 +649,9 @@ Glory, glory to His name!
       get(key, fallback) { try { return JSON.parse(localStorage.getItem('icf-songbook-' + key)) ?? fallback; } catch { return fallback; } },
       set(key, value) { try { localStorage.setItem('icf-songbook-' + key, JSON.stringify(value)); return true; } catch { return false; } }
     };
-    const savedFavorites = storage.get('favorites', []);
-    const favorites = new Set((Array.isArray(savedFavorites) ? savedFavorites : []).filter(id => songById.has(id)));
-    const state = { query: '', language: 'All', view: 'all', sort: 'number', page: 1 };
+    const state = { query: '', language: 'All', page: 1 };
     let filtered = [], readerSequence = [], activeSong = null, lastFocusedSong = null, pushedReaderHistory = false;
     let menuScrollY = 0;
-    let lastMenuControl = null;
     let readerReturnPending = false;
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     let textSize = Number(storage.get('text-size', 21));
@@ -725,43 +674,12 @@ Glory, glory to His name!
       $('current-date').setAttribute('aria-label', 'Today in San Diego: ' + $('current-date').textContent);
       $('current-date').dateTime = parts.year + '-' + parts.month + '-' + parts.day;
     }
-    function renderSongPicker() {
-      const placeholder = document.createElement('option');
-      placeholder.value = ''; placeholder.textContent = 'Select a song…';
-      const options = [...songs].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base', numeric: true })).map(song => {
-        const option = document.createElement('option');
-        option.value = song.id;
-        option.textContent = song.title + ' — #' + song.number;
-        return option;
-      });
-      $('song-picker').replaceChildren(placeholder, ...options);
-    }
     function notify(message) {
       const node = $( $('reader').hidden ? 'page-toast' : 'reader-toast');
       clearTimeout(toastTimers.get(node));
       node.textContent = message;
       node.hidden = false;
       toastTimers.set(node, setTimeout(() => { node.hidden = true; }, 2600));
-    }
-    function updateFavorites() {
-      $('favorites-count').textContent = '(' + favorites.size + ')';
-      $('favorites-count').hidden = favorites.size === 0;
-      document.querySelectorAll('[data-saved]').forEach(label => {
-        label.hidden = !favorites.has(label.dataset.saved);
-      });
-      if (activeSong) {
-        const selected = favorites.has(activeSong.id);
-        $('reader-favorite').setAttribute('aria-pressed', selected);
-        $('reader-favorite').setAttribute('aria-label', selected ? 'Remove this song from favorites' : 'Save this song to favorites');
-        $('favorite-label').textContent = selected ? 'Remove favorite' : 'Save song';
-      }
-    }
-    function toggleFavorite(id) {
-      const removing = favorites.has(id);
-      if (removing) favorites.delete(id); else favorites.add(id);
-      const persisted = storage.set('favorites', [...favorites]);
-      if (state.view === 'favorites') render(); else updateFavorites();
-      notify(persisted ? (removing ? 'Removed from Favorites' : 'Saved in Favorites') : 'Saved for this visit. This browser is not keeping favorites between visits.');
     }
     function makeButton(className, label) {
       const button = document.createElement('button');
@@ -776,7 +694,14 @@ Glory, glory to His name!
         tab.dataset.language = language;
         tab.setAttribute('role', 'tab');
         tab.setAttribute('aria-controls', 'song-collection');
-        tab.addEventListener('click', () => { state.language = language; state.page = 1; render(); });
+        tab.addEventListener('click', () => {
+          state.language = language;
+          state.query = '';
+          state.page = 1;
+          $('song-search').value = '';
+          $('song-search').blur();
+          render();
+        });
         return tab;
       });
       $('language-tabs').replaceChildren(...tabs);
@@ -794,9 +719,8 @@ Glory, glory to His name!
       const terms = normalize(state.query).split(/\s+/).filter(Boolean);
       return songs.filter(song =>
         (state.language === 'All' || song.languages.includes(state.language)) &&
-        (state.view === 'all' || favorites.has(song.id)) &&
         (numberMatch ? song.number === Number(numberMatch[1]) : terms.every(term => song.search.includes(term)))
-      ).sort((a, b) => state.sort === 'title' ? a.title.localeCompare(b.title, undefined, { sensitivity: 'base', numeric: true }) : state.sort === 'newest' ? b.index - a.index : a.number - b.number);
+      ).sort((a, b) => a.number - b.number);
     }
     function renderCard(song) {
       const li = document.createElement('li'); li.className = 'song-card';
@@ -806,15 +730,14 @@ Glory, glory to His name!
       const title = document.createElement('span'); title.className = 'song-name'; title.textContent = song.title;
       const meta = document.createElement('span'); meta.className = 'song-meta';
       const language = document.createElement('span'); language.textContent = song.languages.join(' / ');
-      const saved = document.createElement('span'); saved.className = 'song-saved'; saved.dataset.saved = song.id; saved.textContent = 'Saved'; saved.hidden = !favorites.has(song.id);
-      meta.append(language, saved); copy.append(title, meta);
+      meta.append(language); copy.append(title, meta);
       const action = document.createElement('span'); action.className = 'song-action'; action.setAttribute('aria-hidden', 'true');
       action.innerHTML = icons.next; action.querySelector('svg').classList.add('song-chevron');
       link.setAttribute('aria-label', 'Open song ' + song.number + ': ' + song.title + ' (' + song.languages.join(', ') + ')');
       link.append(number, copy, action);
       link.addEventListener('click', event => {
         if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-        event.preventDefault(); lastFocusedSong = song.id; lastMenuControl = null;
+        event.preventDefault(); lastFocusedSong = song.id;
         readerSequence = filtered.map(item => item.id);
         openSong(song.id, 'push');
       });
@@ -848,28 +771,45 @@ Glory, glory to His name!
       $('empty-state').hidden = filtered.length > 0;
       $('pagination').hidden = filtered.length === 0;
       $('clear-search').hidden = !state.query;
-      $('show-all').hidden = (!state.query && state.language === 'All' && state.view === 'all') || filtered.length === 0;
-      $('all-view').setAttribute('aria-pressed', state.view === 'all');
-      $('favorites-view').setAttribute('aria-pressed', state.view === 'favorites');
+      $('show-all').hidden = (!state.query && state.language === 'All') || filtered.length === 0;
       updateLanguageTabs();
-      $('results-info').textContent = state.view === 'favorites'
-        ? plural(filtered.length, 'saved song') + (state.language !== 'All' ? ' in ' + state.language : '') + ' on this device'
-        : plural(filtered.length, 'song') + (state.language !== 'All' ? ' in ' + state.language : '') + (state.query ? ' found' : '');
-      const noFavorites = state.view === 'favorites' && favorites.size === 0;
-      $('empty-title').textContent = noFavorites ? 'No favorites yet' : 'No songs found';
-      $('empty-description').textContent = noFavorites ? 'Open a song and tap “Save song”. It will be easy to find here next time.' : 'Try another name, a word from the song, or a different language.';
+      $('results-info').textContent = plural(filtered.length, 'song') + (state.language !== 'All' ? ' in ' + state.language : '') + (state.query ? ' found' : '');
       $('page-summary').textContent = 'Showing ' + (start + 1) + '–' + (start + visibleSongs.length) + ' of ' + plural(filtered.length, 'song');
-      renderPages(totalPages); updateFavorites();
+      renderPages(totalPages);
     }
     function changePage(page) {
       state.page = page; render();
-      const toolbar = document.querySelector('.results-toolbar');
-      if (toolbar.getBoundingClientRect().top < 0) toolbar.scrollIntoView({ block: 'start' });
+      const tabs = $('language-tabs');
+      if (tabs.getBoundingClientRect().top < 0) tabs.scrollIntoView({ block: 'start' });
       $('song-list').querySelector('a')?.focus({ preventScroll: true });
     }
     function resetFilters() {
-      Object.assign(state, { query: '', language: 'All', view: 'all', page: 1 });
-      $('song-search').value = ''; render(); $('song-search').focus();
+      Object.assign(state, { query: '', language: 'All', page: 1 });
+      $('song-search').value = ''; render();
+      $('song-search').blur();
+      $('song-collection').focus({ preventScroll: true });
+    }
+    let stopFollowingSearchViewport = () => {};
+    function revealSearchResults() {
+      stopFollowingSearchViewport();
+      const results = $('song-collection');
+      const viewport = window.visualViewport;
+      let cleanupTimer;
+      const stop = () => {
+        window.clearTimeout(cleanupTimer);
+        viewport?.removeEventListener('resize', alignResults);
+      };
+      const alignResults = () => {
+        if (document.activeElement !== results || !$('reader').hidden) { stop(); return; }
+        results.scrollIntoView({ block: 'start', behavior: 'auto' });
+      };
+      // Keep the results in view as the phone keyboard finishes closing.
+      viewport?.addEventListener('resize', alignResults);
+      $('song-search').blur();
+      results.focus({ preventScroll: true });
+      alignResults();
+      cleanupTimer = window.setTimeout(stop, 700);
+      stopFollowingSearchViewport = stop;
     }
     function updateSize() {
       $('reader-lyrics').style.setProperty('--lyric-size', textSize + 'px');
@@ -904,7 +844,7 @@ Glory, glory to His name!
       $('previous-song').disabled = position <= 0;
       $('next-song').disabled = position >= readerSequence.length - 1;
       $('reader-position').textContent = (position + 1) + ' of ' + readerSequence.length + ' songs';
-      updateFavorites(); updateSize();
+      updateSize();
       if ($('reader').hidden) menuScrollY = window.scrollY;
       $('songbook').hidden = true;
       $('reader').hidden = false;
@@ -924,8 +864,8 @@ Glory, glory to His name!
       document.title = 'Worship Songs · ICF San Diego';
       document.querySelector('.skip-link').href = '#songbook';
       document.querySelector('.skip-link').textContent = 'Skip to songbook';
-      const target = lastMenuControl ? $(lastMenuControl) : [...document.querySelectorAll('[data-song-id]')].find(link => link.dataset.songId === lastFocusedSong);
-      (target || $('song-search')).focus({ preventScroll: true });
+      const target = [...document.querySelectorAll('[data-song-id]')].find(link => link.dataset.songId === lastFocusedSong);
+      (target || $('song-collection')).focus({ preventScroll: true });
       window.scrollTo({ top: menuScrollY });
     }
     function requestClose() {
@@ -949,31 +889,14 @@ Glory, glory to His name!
         showMenu();
       }
     }
-    function setToolsOpen(open, focusSongs = false) {
-      $('browse-songs').hidden = !open;
-      $('toggle-tools').setAttribute('aria-expanded', String(open));
-      if (focusSongs) {
-        const target = $('song-list').querySelector('a') || $('toggle-tools');
-        target.focus({ preventScroll: true });
-        const list = $('song-list');
-        if (list.getBoundingClientRect().top < 0) list.scrollIntoView({ block: 'start' });
-      }
-    }
-    $('toggle-tools').addEventListener('click', () => setToolsOpen($('browse-songs').hidden));
-    $('close-tools').addEventListener('click', () => setToolsOpen(false, true));
-    $('song-picker').addEventListener('change', event => {
-      $('open-selected-song').disabled = !songById.has(event.target.value);
-    });
-    $('browse-form').addEventListener('submit', event => {
-      event.preventDefault();
-      const id = $('song-picker').value;
-      if (!songById.has(id)) return;
-      lastFocusedSong = null;
-      lastMenuControl = 'song-picker';
-      readerSequence = [...$('song-picker').options].map(option => option.value).filter(value => songById.has(value));
-      openSong(id, 'push');
-    });
     $('song-search').addEventListener('input', event => { state.query = event.target.value; state.page = 1; render(); });
+    $('song-search-form').addEventListener('submit', event => {
+      event.preventDefault();
+      state.query = $('song-search').value;
+      state.page = 1;
+      render();
+      revealSearchResults();
+    });
     $('clear-search').addEventListener('click', () => { state.query = ''; state.page = 1; $('song-search').value = ''; render(); $('song-search').focus(); });
     $('language-tabs').addEventListener('keydown', event => {
       const tabs = [...$('language-tabs').querySelectorAll('[role="tab"]')];
@@ -990,13 +913,9 @@ Glory, glory to His name!
       tabs[next].click();
     });
     $('show-all').addEventListener('click', resetFilters);
-    $('song-sort').addEventListener('change', event => { state.sort = event.target.value; state.page = 1; render(); });
-    $('all-view').addEventListener('click', () => { state.view = 'all'; state.page = 1; render(); });
-    $('favorites-view').addEventListener('click', () => { state.view = 'favorites'; state.page = 1; render(); });
     $('reset-filters').addEventListener('click', resetFilters);
     $('close-reader').addEventListener('click', requestClose);
     $('back-to-menu-bottom').addEventListener('click', requestClose);
-    $('reader-favorite').addEventListener('click', () => { if (activeSong) toggleFavorite(activeSong.id); });
     $('previous-song').addEventListener('click', () => { if (activeSong) openSong(readerSequence[readerSequence.indexOf(activeSong.id) - 1], 'replace'); });
     $('next-song').addEventListener('click', () => { if (activeSong) openSong(readerSequence[readerSequence.indexOf(activeSong.id) + 1], 'replace'); });
     $('text-smaller').addEventListener('click', () => { textSize = Math.max(17, textSize - 2); updateSize(); storage.set('text-size', textSize); });
@@ -1025,7 +944,7 @@ Glory, glory to His name!
     window.setInterval(updateCurrentDate, 60000);
     window.addEventListener('pageshow', updateCurrentDate);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) updateCurrentDate(); });
-    renderLanguages(); renderSongPicker(); render(); syncHash();
+    renderLanguages(); render(); syncHash();
   })();
   </script>
 </body>

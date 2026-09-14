@@ -85,14 +85,7 @@
     .empty h2 { margin: 0 0 11px; font: 400 28px var(--serif); }
     .empty p { max-width: 420px; margin: 0 auto 20px; color: var(--muted); line-height: 1.7; font-size: 16px; }
     .primary-button { background: var(--navy); color: white; border: 1px solid var(--navy); border-radius: 7px; padding: 13px 22px; min-height: 48px; font-size: 16px; }
-    .pagination { margin-top: 22px; }
-    #page-summary { display: block; text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 14px; }
-    .pagination-buttons { display: flex; align-items: center; justify-content: center; gap: 18px; }
-    .page-button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid #b9c0be; border-radius: 8px; padding: 11px 14px; min-height: 46px; font-size: 15px; background: var(--paper); }
-    .page-button svg { width: 16px; height: 16px; }
-    .page-button.next:not(:disabled) { background: var(--navy); border-color: var(--navy); color: white; }
-    .page-picker { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
-    .page-picker select { min-height: 46px; width: auto; max-width: 124px; padding: 8px 6px; font-size: 14px; }
+    .song-count { text-align: center; color: var(--muted); font-size: 13px; margin: 22px 0 0; }
     .page-footer { margin-top: 31px; padding: 20px 0 25px; border-top: 1px solid var(--line); color: var(--muted); text-align: center; font-size: 12px; line-height: 1.5; }
     .reader-toolbar { margin-bottom: 22px; }
     .reader-back { display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 14px 18px; border: 0; border-radius: 14px; background: linear-gradient(180deg, #f6e4ac, #ebcf79); color: var(--navy); font-size: 16px; font-weight: 700; }
@@ -143,10 +136,6 @@
       .song-meta { font-size: 12px; }
       .song-action { gap: 1px; font-size: 12px; }
       .song-chevron { width: 20px; height: 20px; }
-      .pagination-buttons { gap: 8px; }
-      .page-button { font-size: 13px; padding: 10px 9px; gap: 2px; }
-      .page-picker { gap: 4px; font-size: 12px; }
-      .page-picker select { font-size: 13px; max-width: 91px; }
       .reader-toolbar { margin-bottom: 20px; }
       .reader-body { padding: 0; }
       .lyrics { padding: 17px 14px; line-height: 1.8; }
@@ -202,9 +191,7 @@
         <p id="empty-description">Try another name, a word from the song, or a different language.</p>
         <button class="primary-button" id="reset-filters" type="button">Show all songs</button>
       </div>
-      <nav class="pagination" id="pagination" aria-label="Song pages">
-        <span id="page-summary"></span><div class="pagination-buttons" id="page-buttons"></div>
-      </nav>
+      <p class="song-count" id="song-count"></p>
     </section>
     <footer class="page-footer">India Christian Fellowship · San Diego</footer>
   </main>
@@ -238,7 +225,7 @@
     Copy one section below, set a new unique id (song12, song13, ...),
     data-number, data-languages (comma-separated), title, and lyrics.
     Keep existing IDs and numbers stable so shared song links still work.
-    The menu, search, language filters, counts, and pages update automatically.
+    The menu, search, language tabs, and song count update automatically.
     Optional data-keywords lets you add alternate song-title spellings.
   -->
   <template id="song-data">
@@ -624,12 +611,78 @@ Oh, the joy of full salvation!
 Glory, glory to His name!
       </div>
     </section>
+  
+    <section class="song-page" id="song12" data-number="12" data-languages="English">
+      <h2 class="song-title">You Are My Strength</h2>
+      <div class="lyrics">You are my strength when I am weak
+You are the treasure that I seek
+You are my all in all
+Seeking You as a precious jewel
+Lord to give up I'd be a fool
+You are my all in all
+Jesus Lamb of God worthy is Your name
+Jesus Lamb of God worthy is Your name
+Taking my sin my cross my shame
+Rising again I bless your name
+You are my all in all
+When I fall down you pick me up
+When I am dry You fill my cup
+You are my all in all
+Jesus Lamb of God worthy is your name || 4 ||
+Worthy is Your name || 2 ||</div>
+    </section>
+  
+    <section class="song-page" id="song13" data-number="13" data-languages="Malayalam">
+      <h2 class="song-title">Nin Thiru Sannidhiyil</h2>
+      <div class="lyrics">Nin thiru sannidhiyil
+Njan innu kumbidunnu
+Nin thiru sannidhiyil
+Njan innu kumbidunnu
+
+En kriyayalalla nin dayayaal mathram
+Njaninnu kumbidunnu
+En kriyayalalla nin dayayaal mathram
+Njaninnu kumbidunnu
+
+Yeshu rajavinu sthuthi
+rajavinu sthothram
+Unnathangalil sthuthi
+Srishtikal vaazhthatte sudhar vanagatte
+Unnathanam Yeshuve”2”
+
+Van paapabharamellam
+Nin krupayal neekiyello
+Van paapabharamellam
+Nin krupayal neekiyello
+
+Nindithenamente shaapangal nee neeki
+Nin makanakkiyello
+Nindithenamente shaapangal nee neeki
+Nin makanakkiyello
+
+Yeshu rajavinu sthuthi
+rajavinu sthothram
+Unnathangalil sthuthi
+Srishtikal vaazhthatte sudhar vanagatte
+Unnathanam Yeshuve”2”
+
+Van thumba nerathilum 
+Ennay piriukilla”2”
+Ennay nadathunnon 
+Ennennum koodllon
+Nin sneham agadhamay  || 2 || 
+
+Yeshu rajavinu sthuthi
+rajavinu sthothram
+Unnathangalil sthuthi
+Srishtikal vaazhthatte sudhar vanagatte
+Unnathanam Yeshuve  || 2 || </div>
+    </section>
   </template>
 
   <script>
   (() => {
     'use strict';
-    const PAGE_SIZE = 8;
     const $ = id => document.getElementById(id);
     const normalize = value => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().replace(/[’']/g, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
     const icons = {
@@ -649,7 +702,7 @@ Glory, glory to His name!
       get(key, fallback) { try { return JSON.parse(localStorage.getItem('icf-songbook-' + key)) ?? fallback; } catch { return fallback; } },
       set(key, value) { try { localStorage.setItem('icf-songbook-' + key, JSON.stringify(value)); return true; } catch { return false; } }
     };
-    const state = { query: '', language: 'All', page: 1 };
+    const state = { query: '', language: 'All' };
     let filtered = [], readerSequence = [], activeSong = null, lastFocusedSong = null, pushedReaderHistory = false;
     let menuScrollY = 0;
     let readerReturnPending = false;
@@ -697,7 +750,6 @@ Glory, glory to His name!
         tab.addEventListener('click', () => {
           state.language = language;
           state.query = '';
-          state.page = 1;
           $('song-search').value = '';
           $('song-search').blur();
           render();
@@ -743,48 +795,19 @@ Glory, glory to His name!
       });
       li.append(link); return li;
     }
-    function renderPages(totalPages) {
-      const previous = makeButton('page-button', 'Previous');
-      previous.setAttribute('aria-label', 'Previous page'); previous.disabled = state.page === 1;
-      previous.addEventListener('click', () => changePage(state.page - 1));
-      const picker = document.createElement('label'); picker.className = 'page-picker';
-      const label = document.createElement('span'); label.textContent = 'Page';
-      const select = document.createElement('select'); select.setAttribute('aria-label', 'Go to page');
-      for (let page = 1; page <= totalPages; page++) {
-        const option = document.createElement('option'); option.value = page; option.textContent = page + ' of ' + totalPages; option.selected = page === state.page; select.append(option);
-      }
-      select.addEventListener('change', event => changePage(Number(event.target.value)));
-      picker.append(label, select);
-      const next = makeButton('page-button next', 'Next');
-      next.setAttribute('aria-label', 'Next page'); next.disabled = state.page === totalPages;
-      next.addEventListener('click', () => changePage(state.page + 1));
-      $('page-buttons').replaceChildren(previous, picker, next);
-      $('page-buttons').hidden = totalPages <= 1;
-    }
     function render() {
       filtered = applyFilters();
-      const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-      state.page = Math.max(1, Math.min(state.page, totalPages));
-      const start = (state.page - 1) * PAGE_SIZE;
-      const visibleSongs = filtered.slice(start, start + PAGE_SIZE);
-      $('song-list').replaceChildren(...visibleSongs.map(renderCard));
+      $('song-list').replaceChildren(...filtered.map(renderCard));
       $('empty-state').hidden = filtered.length > 0;
-      $('pagination').hidden = filtered.length === 0;
+      $('song-count').hidden = filtered.length === 0;
       $('clear-search').hidden = !state.query;
       $('show-all').hidden = (!state.query && state.language === 'All') || filtered.length === 0;
       updateLanguageTabs();
       $('results-info').textContent = plural(filtered.length, 'song') + (state.language !== 'All' ? ' in ' + state.language : '') + (state.query ? ' found' : '');
-      $('page-summary').textContent = 'Showing ' + (start + 1) + '–' + (start + visibleSongs.length) + ' of ' + plural(filtered.length, 'song');
-      renderPages(totalPages);
-    }
-    function changePage(page) {
-      state.page = page; render();
-      const tabs = $('language-tabs');
-      if (tabs.getBoundingClientRect().top < 0) tabs.scrollIntoView({ block: 'start' });
-      $('song-list').querySelector('a')?.focus({ preventScroll: true });
+      $('song-count').textContent = $('results-info').textContent;
     }
     function resetFilters() {
-      Object.assign(state, { query: '', language: 'All', page: 1 });
+      Object.assign(state, { query: '', language: 'All' });
       $('song-search').value = ''; render();
       $('song-search').blur();
       $('song-collection').focus({ preventScroll: true });
@@ -889,15 +912,14 @@ Glory, glory to His name!
         showMenu();
       }
     }
-    $('song-search').addEventListener('input', event => { state.query = event.target.value; state.page = 1; render(); });
+    $('song-search').addEventListener('input', event => { state.query = event.target.value; render(); });
     $('song-search-form').addEventListener('submit', event => {
       event.preventDefault();
       state.query = $('song-search').value;
-      state.page = 1;
       render();
       revealSearchResults();
     });
-    $('clear-search').addEventListener('click', () => { state.query = ''; state.page = 1; $('song-search').value = ''; render(); $('song-search').focus(); });
+    $('clear-search').addEventListener('click', () => { state.query = ''; $('song-search').value = ''; render(); $('song-search').focus(); });
     $('language-tabs').addEventListener('keydown', event => {
       const tabs = [...$('language-tabs').querySelectorAll('[role="tab"]')];
       const current = tabs.indexOf(event.target);

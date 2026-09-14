@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Songbook Editor · ICF San Diego</title>
+  <style>
+    :root { --navy: #081b39; --ink: #182d42; --muted: #606b74; --gold: #d7ae49; --line: #e4dac5; --paper: #fffdfa; --ground: #f7f3ec; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; background: var(--ground); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; line-height: 1.5; }
+    button, input, textarea { font: inherit; }
+    button, input[type=checkbox], input[type=file] { touch-action: manipulation; }
+    button, input[type=checkbox] { cursor: pointer; }
+    button:disabled { opacity: .5; cursor: default; }
+    :focus-visible { outline: 3px solid #9b7736; outline-offset: 3px; }
+    a { color: var(--navy); text-underline-offset: 3px; }
+    .wrap { width: min(840px, calc(100% - 32px)); margin: auto; }
+    header { border-bottom: 3px solid var(--gold); background: #fcf7ed; padding: 19px 0; }
+    .brand { margin: 0; font-family: Georgia, serif; font-size: 20px; font-weight: 600; }
+    .place { display: block; color: var(--muted); font-family: inherit; font-size: 12px; font-weight: 400; margin-top: 2px; }
+    main { padding: 26px 0 46px; }
+    h1 { margin: 0 0 5px; font: 400 32px/1.25 Georgia, serif; }
+    h2 { font-size: 18px; margin: 0 0 7px; line-height: 1.4; }
+    p { margin: 0 0 13px; }
+    .intro { color: var(--muted); margin-bottom: 20px; font-size: 15px; }
+    .notice { margin: 0 0 20px; padding: 12px 16px; border-left: 3px solid var(--gold); background: #eee7d7; font-size: 14px; border-radius: 0 7px 7px 0; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 15px; padding: 21px; margin-bottom: 17px; }
+    .heading { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+    .step { flex-shrink: 0; display: grid; place-items: center; width: 28px; height: 28px; color: var(--navy); background: #ead8a5; font-size: 14px; font-weight: 700; border-radius: 50%; }
+    .heading h2 { margin: 1px 0 3px; }
+    .help { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    input[type=file] { display: block; width: 100%; padding: 8px; font-size: 14px; border: 1px dashed #b5ad98; border-radius: 8px; background: #f9f6ef; }
+    input[type=file]::file-selector-button { margin-right: 10px; border: 0; border-radius: 6px; padding: 10px 14px; background: var(--navy); color: white; font: inherit; cursor: pointer; }
+    .loaded { margin: 12px 0 0; padding: 9px 12px; border-radius: 7px; background: #edf2e9; color: #34532f; font-size: 14px; overflow-wrap: anywhere; }
+    .error { margin: 13px 0 0; padding: 10px 12px; border-radius: 7px; background: #faeeee; color: #912c2c; font-size: 14px; }
+    .success { margin: 12px 0 0; color: #34532f; font-size: 14px; }
+    .field { margin-bottom: 17px; }
+    label, legend { font-size: 14px; font-weight: 600; }
+    .field > label { display: block; margin-bottom: 6px; }
+    input[type=text], textarea { display: block; width: 100%; background: #fff; color: var(--ink); border: 1px solid #b9c0be; border-radius: 8px; padding: 10px 12px; font-size: 16px; }
+    input[type=text] { min-height: 46px; }
+    textarea { min-height: 240px; resize: vertical; line-height: 1.65; }
+    fieldset { border: 0; margin: 0 0 17px; padding: 0; min-width: 0; }
+    legend { margin-bottom: 8px; padding: 0; }
+    legend span, .optional { font-weight: 400; color: var(--muted); font-size: 12px; }
+    .language-options { display: flex; flex-wrap: wrap; gap: 7px; }
+    .language-choice { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 7px; background: #f9f6ef; cursor: pointer; font-size: 14px; font-weight: 400; }
+    input[type=checkbox] { accent-color: var(--navy); width: 17px; height: 17px; margin: 0; }
+    .other-language { margin-top: 12px; }
+    .other-language > label { display: block; margin-bottom: 5px; font-size: 13px; }
+    .number { display: inline-block; margin-top: 3px; color: #735620; font-size: 13px; font-weight: 600; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .button { min-height: 46px; padding: 11px 18px; border: 1px solid var(--navy); border-radius: 8px; background: var(--navy); color: white; font-size: 15px; font-weight: 600; }
+    .secondary { color: var(--navy); background: transparent; border-color: var(--line); font-weight: 400; }
+    .download { background: #ead18b; color: var(--navy); border-color: #d7bd70; }
+    .pending { list-style: none; margin: 0 0 16px; padding: 0; }
+    .pending li { border-bottom: 1px solid var(--line); padding: 12px 0; }
+    .pending-top { display: flex; gap: 12px; align-items: start; justify-content: space-between; }
+    details { flex: 1; min-width: 0; }
+    summary { cursor: pointer; padding: 7px 0; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+    summary small { display: block; margin-left: 16px; margin-top: 3px; color: var(--muted); font-size: 12px; font-weight: 400; }
+    .preview { margin: 10px 0 0; padding: 14px; border-radius: 8px; background: #f8f5ed; white-space: pre-wrap; overflow-wrap: anywhere; font: 17px/1.8 Georgia, serif; }
+    .undo { border: 0; background: transparent; color: var(--muted); padding: 10px 0 10px 12px; min-height: 44px; text-decoration: underline; font-size: 13px; }
+    .upload-help { margin-top: 13px; font-size: 13px; line-height: 1.7; }
+    .upload-help ol { margin: 8px 0; padding-left: 21px; }
+    footer { color: var(--muted); text-align: center; font-size: 12px; margin-top: 22px; }
+    @media (max-width: 560px) {
+      .wrap { width: calc(100% - 24px); }
+      main { padding-top: 20px; }
+      .card { padding: 16px; }
+      h1 { font-size: 29px; }
+      .brand { font-size: 17px; }
+      .actions .button { flex: 1 1 auto; }
+      .language-choice { flex: 1 1 auto; }
+    }
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><p class="brand">India Christian Fellowship<span class="place">San Diego</span></p></div></header>
+  <main class="wrap" id="local-only">
+    <h1>Keep your editor on your computer</h1>
+    <p class="intro">Download this file and open it in your browser to add songs. Upload only the finished <strong>index.html</strong> to GitHub.</p>
+    <p class="notice">This separate editor is meant to stay off your public website. Keeping its file private is what keeps the editing option private.</p>
+    <noscript><p>Enable JavaScript in your browser to use the editor.</p></noscript>
+  </main>
+  <main class="wrap" id="local-editor" hidden>
+    <h1>Your songbook editor</h1>
+    <p class="intro">Add songs here, then download your updated songbook.</p>
+    <p class="notice"><strong>Keep this editor on your computer.</strong> Upload only the downloaded <strong>index.html</strong> to GitHub. Your public songbook will show only songs.</p>
+
+    <section class="card" aria-labelledby="load-heading">
+      <div class="heading"><span class="step" aria-hidden="true">1</span><div><h2 id="load-heading">Open your latest songbook</h2><p class="help" id="file-help">Choose the latest index.html you use for your website. This keeps all your existing songs.</p></div></div>
+      <input id="songbook-file" type="file" accept=".html,.htm,text/html" aria-label="Choose your latest songbook HTML file" aria-describedby="file-help">
+      <p id="loaded-status" class="loaded" role="status" hidden></p>
+      <p id="file-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section class="card" id="add-section" aria-labelledby="add-heading" hidden>
+      <div class="heading"><span class="step" aria-hidden="true">2</span><div><h2 id="add-heading">Add a song</h2><span id="next-number" class="number"></span></div></div>
+      <form id="add-form">
+        <div class="field"><label for="song-title">Song title</label><input id="song-title" type="text" required maxlength="250" autocomplete="off" placeholder="Enter the song name"></div>
+        <fieldset><legend>Language <span>— choose more than one if needed</span></legend><div class="language-options" id="language-options"></div>
+          <div class="other-language"><label for="other-language">Another language <span class="optional">(optional)</span></label><input id="other-language" type="text" maxlength="150" placeholder="e.g. Kannada" autocomplete="off"></div>
+        </fieldset>
+        <div class="field"><label for="song-lyrics">Lyrics</label><textarea id="song-lyrics" required placeholder="Paste the lyrics here.&#10;&#10;Leave a blank line between verses." aria-describedby="lyrics-help"></textarea><p class="help" id="lyrics-help">Line breaks and blank lines will appear just as you enter them.</p></div>
+        <div class="actions"><button class="button" type="submit">Add to songbook</button><button id="clear-form" class="button secondary" type="button">Clear form</button></div>
+        <p id="form-error" class="error" role="alert" hidden></p>
+        <p id="add-status" class="success" role="status" hidden></p>
+      </form>
+    </section>
+
+    <section class="card" id="download-section" aria-labelledby="download-heading" hidden>
+      <div class="heading"><span class="step" aria-hidden="true">3</span><div><h2 id="download-heading">Download your updated songbook</h2><p id="pending-summary" class="help" role="status">Add a song above to get started.</p></div></div>
+      <ul class="pending" id="pending-songs" aria-label="Songs added in this session"></ul>
+      <button class="button download" id="download-songbook" type="button" disabled>Download index.html</button>
+      <p id="download-status" class="success" role="status" hidden></p>
+      <div id="upload-help" class="upload-help" hidden>
+        <ol>
+          <li>Find the downloaded file. If its name is <strong>index (1).html</strong>, rename it to <strong>index.html</strong>.</li>
+          <li>Open <a href="https://github.com/icfsandiego/worship" target="_blank" rel="noopener noreferrer">your worship repository</a> and replace its index.html with this file.</li>
+          <li>Commit the change in GitHub. Keep this downloaded copy for the next time you add songs.</li>
+        </ol>
+        <p class="help">Downloading prepares the file. Your live website updates after you upload and commit it in GitHub.</p>
+      </div>
+    </section>
+    <footer>Your files stay in this browser while you work. Download the updated songbook before closing.</footer>
+  </main>
+  <script>
+  (() => {
+    'use strict';
+    // This separate file is for local use. This check is not authentication.
+    // Do not upload the editor to the public repository or website.
+    if (location.protocol !== 'file:') return;
+    const $ = id => document.getElementById(id);
+    $('local-only').hidden = true;
+    $('local-editor').hidden = false;
+    let original = '', insertionPoint = 0, existing = [], pending = [], usedIds = new Set();
+    let revision = 0, downloadedRevision = 0;
+    const commonLanguages = ['English', 'Hindi', 'Malayalam', 'Tamil', 'Telugu'];
+    const knownLanguages = () => [...new Set([...commonLanguages, ...existing.flatMap(song => song.languages), ...pending.flatMap(song => song.languages)])].sort((a, b) => a.localeCompare(b));
+    const show = (id, message) => { $(id).textContent = message; $(id).hidden = !message; };
+    const formHasText = () => ['song-title', 'song-lyrics', 'other-language'].some(id => $(id).value.trim());
+    const hasUnsavedWork = () => revision !== downloadedRevision || formHasText();
+    const readFile = file => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = () => reject(new Error('This file could not be opened. Please choose it again.'));
+      reader.readAsText(file, 'UTF-8');
+    });
+
+    function parseSongbook(text) {
+      const doc = new DOMParser().parseFromString(text, 'text/html');
+      const templates = doc.querySelectorAll('template#song-data');
+      const opening = '<template id="song-data">';
+      const start = text.indexOf(opening);
+      const end = text.indexOf('</template>', start + opening.length);
+      if (templates.length !== 1 || start < 0 || end < 0 || text.indexOf(opening, start + 1) >= 0 || !doc.getElementById('song-list')) {
+        throw new Error('Choose the redesigned ICF songbook index.html. This file does not contain its song list.');
+      }
+      const template = templates[0];
+      const raw = new DOMParser().parseFromString(opening + text.slice(start + opening.length, end) + '</template>', 'text/html');
+      if (raw.querySelector('template').innerHTML !== template.innerHTML || template.content.querySelector('template')) {
+        throw new Error('This songbook uses a different format. Use the current redesigned index.html.');
+      }
+      const numbers = new Set();
+      const allIds = new Set([...doc.querySelectorAll('[id]')].map(node => node.id));
+      const songNodes = [...template.content.querySelectorAll('.song-page')];
+      if (!songNodes.length) throw new Error('No songs were found. Please choose your latest songbook.');
+      const songs = songNodes.map(section => {
+        const number = Number(section.dataset.number);
+        const title = section.querySelector('.song-title')?.textContent.trim();
+        const lyrics = section.querySelector('.lyrics');
+        const languages = (section.dataset.languages || '').split(',').map(value => value.trim()).filter(Boolean);
+        if (!section.id || allIds.has(section.id) || !Number.isSafeInteger(number) || number < 1 || numbers.has(number) || !title || !lyrics || !languages.length) {
+          throw new Error('An existing song has missing details or a duplicate number. Please choose a valid copy of your songbook.');
+        }
+        allIds.add(section.id); numbers.add(number);
+        return { id: section.id, number, title, languages };
+      });
+      template.content.querySelectorAll('[id]').forEach(node => allIds.add(node.id));
+      return { songs, end, allIds };
+    }
+
+    function nextNumber() {
+      let number = [...existing, ...pending].reduce((max, song) => Math.max(max, song.number), 0) + 1;
+      while (Number.isSafeInteger(number) && usedIds.has('song' + number)) number++;
+      if (!Number.isSafeInteger(number)) throw new Error('The song numbers are too large to add another song.');
+      return number;
+    }
+
+    function renderLanguageOptions(selected = []) {
+      $('language-options').replaceChildren(...knownLanguages().map(language => {
+        const label = document.createElement('label'); label.className = 'language-choice';
+        const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.name = 'language'; checkbox.value = language; checkbox.checked = selected.includes(language);
+        label.append(checkbox, document.createTextNode(language));
+        return label;
+      }));
+    }
+
+    function clearForm() {
+      $('add-form').reset();
+      renderLanguageOptions();
+      show('form-error', '');
+      $('next-number').textContent = 'Song #' + nextNumber() + ' · number assigned automatically';
+    }
+
+    function renderPending() {
+      $('next-number').textContent = 'Song #' + nextNumber() + ' · number assigned automatically';
+      $('pending-summary').textContent = pending.length
+        ? pending.length + (pending.length === 1 ? ' new song' : ' new songs') + ' · ' + (existing.length + pending.length) + ' songs in your updated songbook. Tap a title to review the lyrics.'
+        : 'Add a song above to get started.';
+      $('download-songbook').disabled = !pending.length;
+      $('pending-songs').replaceChildren(...pending.map(song => {
+        const li = document.createElement('li');
+        const row = document.createElement('div'); row.className = 'pending-top';
+        const details = document.createElement('details');
+        const summary = document.createElement('summary'); summary.textContent = '#' + song.number + ' · ' + song.title;
+        const languages = document.createElement('small'); languages.textContent = song.languages.join(' / '); summary.append(languages);
+        const lyrics = document.createElement('div'); lyrics.className = 'preview'; lyrics.textContent = song.lyrics;
+        details.append(summary, lyrics);
+        const undo = document.createElement('button'); undo.type = 'button'; undo.className = 'undo'; undo.textContent = 'Undo'; undo.setAttribute('aria-label', 'Undo adding song ' + song.number + ': ' + song.title);
+        undo.addEventListener('click', () => {
+          pending = pending.filter(item => item !== song); revision++;
+          show('download-status', ''); $('upload-help').hidden = true;
+          show('add-status', 'Song #' + song.number + ' removed from this draft.');
+          renderPending(); $('song-title').focus();
+        });
+        row.append(details, undo); li.append(row); return li;
+      }));
+    }
+
+    $('songbook-file').addEventListener('change', async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      $('songbook-file').disabled = true;
+      show('file-error', '');
+      try {
+        const text = await readFile(file);
+        const parsed = parseSongbook(text);
+        if (hasUnsavedWork() && !window.confirm('Open another songbook and discard your undownloaded changes here?')) return;
+        original = text; insertionPoint = parsed.end; existing = parsed.songs; usedIds = parsed.allIds;
+        pending = []; revision = 0; downloadedRevision = 0;
+        clearForm(); renderPending();
+        show('loaded-status', file.name + ' opened · ' + existing.length + ' existing songs.');
+        show('add-status', ''); show('download-status', ''); $('upload-help').hidden = true;
+        $('add-section').hidden = false; $('download-section').hidden = false;
+        $('song-title').focus();
+      } catch (error) {
+        show('file-error', error.message || 'The file could not be opened. Please choose your latest index.html.');
+      } finally {
+        $('songbook-file').disabled = false;
+        $('songbook-file').value = '';
+      }
+    });
+
+    $('clear-form').addEventListener('click', () => {
+      if (formHasText() && !window.confirm('Clear the song currently in the form?')) return;
+      clearForm(); show('add-status', ''); $('song-title').focus();
+    });
+
+    $('add-form').addEventListener('submit', event => {
+      event.preventDefault();
+      show('form-error', ''); show('add-status', '');
+      if (!original) return;
+      const title = $('song-title').value.trim();
+      const lyrics = $('song-lyrics').value.replace(/\r\n?/g, '\n');
+      if (!title || !lyrics.trim()) { show('form-error', 'Enter both the song title and lyrics.'); (!title ? $('song-title') : $('song-lyrics')).focus(); return; }
+      const names = [...document.querySelectorAll('input[name="language"]:checked')].map(input => input.value);
+      const canonical = new Map(knownLanguages().map(name => [name.toLocaleLowerCase(), name]));
+      const other = $('other-language').value.split(',').map(name => name.trim()).filter(Boolean);
+      const languages = [];
+      const seen = new Set();
+      for (const name of [...names, ...other]) {
+        const key = name.toLocaleLowerCase();
+        if (!seen.has(key)) { languages.push(canonical.get(key) || name); seen.add(key); }
+      }
+      if (!languages.length) { show('form-error', 'Choose a language, or enter another language.'); $('language-options').querySelector('input').focus(); return; }
+      const duplicate = [...existing, ...pending].find(song => song.title.toLocaleLowerCase() === title.toLocaleLowerCase());
+      if (duplicate && !window.confirm('Song #' + duplicate.number + ' already has this title. Add another version?')) return;
+      const number = nextNumber();
+      pending.push({ id: 'song' + number, number, title, languages, lyrics }); revision++;
+      clearForm(); renderPending();
+      show('download-status', ''); $('upload-help').hidden = true;
+      show('add-status', 'Song #' + number + ' added to this draft. Download below when you are ready, or add another song.');
+      $('download-section').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      $('download-songbook').focus({ preventScroll: true });
+    });
+
+    function songMarkup(song) {
+      const section = document.createElement('section');
+      section.className = 'song-page'; section.id = song.id;
+      section.dataset.number = String(song.number); section.dataset.languages = song.languages.join(', ');
+      const title = document.createElement('h2'); title.className = 'song-title'; title.textContent = song.title;
+      const lyrics = document.createElement('div'); lyrics.className = 'lyrics'; lyrics.textContent = song.lyrics;
+      section.append('\n      ', title, '\n      ', lyrics, '\n    ');
+      return '    ' + section.outerHTML;
+    }
+
+    $('download-songbook').addEventListener('click', () => {
+      if (!original || !pending.length) return;
+      if (formHasText()) { show('form-error', 'There is still a song in the form. Choose “Add to songbook” first, or clear the form.'); $('song-title').focus(); return; }
+      const additions = '\n' + pending.map(songMarkup).join('\n\n') + '\n  ';
+      const updated = original.slice(0, insertionPoint) + additions + original.slice(insertionPoint);
+      const blob = new Blob([updated], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a'); link.href = url; link.download = 'index.html';
+      document.body.append(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+      downloadedRevision = revision;
+      show('download-status', 'Download requested. Check your Downloads folder for index.html, then upload it to GitHub.');
+      $('upload-help').hidden = false;
+    });
+
+    window.addEventListener('beforeunload', event => {
+      if (hasUnsavedWork()) { event.preventDefault(); event.returnValue = ''; }
+    });
+  })();
+  </script>
+</body>
+</html>
